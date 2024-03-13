@@ -114,4 +114,25 @@ class HomeRepoImpl extends HomeRepo {
       );
     }
   }
+
+  @override
+  Future<Either<Failure, List<BookEntity>>> fetchCategoryBooks(
+      {int pageNumber = 0, required String category}) async {
+    try {
+      List<BookEntity> books = await remoteHomeDataSource.fetchCategoryBooks(
+          category: category, pageNumber: pageNumber);
+      return right(books);
+    } catch (e) {
+      if (e is DioException) {
+        return left(
+          ServerFailure.fromDioException(e),
+        );
+      }
+      return left(
+        ServerFailure(
+          errorMessage: e.toString(),
+        ),
+      );
+    }
+  }
 }

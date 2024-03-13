@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:story_squad/core/utils/constants.dart';
 import 'package:story_squad/core/utils/functions/build_error_snack_bar.dart';
 import 'package:story_squad/core/utils/spaces.dart';
 import 'package:story_squad/core/widgets/custom_button.dart';
@@ -24,6 +25,7 @@ class ActionButtonsRow extends StatelessWidget {
             children: [
               Expanded(
                 child: CustomButton(
+                  height: 48,
                   onPressed: () {},
                   text: price == 0.0 ? 'Free' : '$price\$',
                   backgroundColor: Colors.white,
@@ -36,6 +38,7 @@ class ActionButtonsRow extends StatelessWidget {
               ),
               Expanded(
                 child: CustomButton(
+                  height: 48,
                   onPressed: () {
                     if (url.isNotEmpty) {
                       BlocProvider.of<PreviewPriceCubit>(context)
@@ -47,7 +50,7 @@ class ActionButtonsRow extends StatelessWidget {
                     }
                   },
                   text: 'Preview',
-                  backgroundColor: const Color(0xffEF8262),
+                  backgroundColor: AppConstants.kSecondaryColor,
                   textColor: Colors.white,
                   textSize: 16,
                   borderRadius: const BorderRadius.only(

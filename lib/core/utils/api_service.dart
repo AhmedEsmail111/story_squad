@@ -5,23 +5,21 @@ class ApiService {
 
   ApiService({required Dio dio}) : _dio = dio;
 
-  final baseUrl = 'https://www.googleapis.com/books/v1/';
-
   Future<Response> post({
     required body,
     String? token,
     required String endPoint,
     String? contentType,
-    // String? stripeVersion,
+    String? stripeVersion,
   }) async {
     return _dio.post(
-      '$baseUrl$endPoint',
+      endPoint,
       data: body,
       options: Options(
         contentType: contentType ?? 'application/json',
         headers: {
           'Authorization': token,
-          // if (stripeVersion != null) 'Stripe-Version': stripeVersion
+          if (stripeVersion != null) 'Stripe-Version': stripeVersion
         },
       ),
     );
@@ -32,16 +30,16 @@ class ApiService {
     String? token,
     required String endPoint,
     String? contentType,
-    // String? stripeVersion,
+    String? stripeVersion,
   }) async {
     final response = await _dio.get(
-      '$baseUrl$endPoint',
+      endPoint,
       data: body,
       options: Options(
         contentType: contentType ?? 'application/json',
         headers: {
           'Authorization': token,
-          // if (stripeVersion != null) 'Stripe-Version': stripeVersion
+          if (stripeVersion != null) 'Stripe-Version': stripeVersion
         },
       ),
     );

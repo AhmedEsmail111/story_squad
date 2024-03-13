@@ -57,3 +57,33 @@ class ChangeQuantityFailure extends CheckoutStates {
 
   ChangeQuantityFailure({required this.errorMessage});
 }
+
+class PaymentLoading extends CheckoutStates {}
+
+class PaymentSuccess extends CheckoutStates {}
+
+class PaymentFailure extends CheckoutStates {
+  final String errorMessage;
+
+  PaymentFailure({required this.errorMessage});
+}
+
+class TogglePaymentMethod extends CheckoutStates {}
+
+class StripePaymentLoading extends CheckoutStates {}
+
+class StripePaymentSuccess extends CheckoutStates {}
+
+class StripePaymentFailure extends CheckoutStates {
+  final String errorMessage;
+
+  StripePaymentFailure({required this.errorMessage});
+}
+
+class PaypalPaymentSuccess extends CheckoutStates {}
+
+class PaypalPaymentFailure extends CheckoutStates {
+  final String errorMessage;
+
+  PaypalPaymentFailure({required this.errorMessage});
+}

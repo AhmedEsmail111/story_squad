@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 abstract class AppConstants {
   static const kPrimaryColor = Color(0xff100B20);
+  static const kSecondaryColor = Color(0xffEF8262);
   static const kFadingColor = Color.fromARGB(255, 218, 215, 226);
   static const kTranstionDuration = Duration(milliseconds: 300);
   static const kSlidingDuration = Duration(milliseconds: 1200);
@@ -9,4 +10,6 @@ abstract class AppConstants {
   static const kFeaturedBox = 'featured_box';
   static const kNewestBox = 'newest_box';
   static const kCartBox = 'cart_box';
+  static const kTaxFee = 45;
+  static const kShipmentFee = 55;
 }

@@ -1,5 +1,7 @@
 import 'package:hive/hive.dart';
 
+part 'order_entity.g.dart';
+
 @HiveType(typeId: 1)
 class OrderEntity extends HiveObject {
   @HiveField(0)
@@ -24,46 +26,46 @@ class OrderEntity extends HiveObject {
   });
 }
 
-class OrderEntityAdapter extends TypeAdapter<OrderEntity> {
-  @override
-  final int typeId = 1;
+// class OrderEntityAdapter extends TypeAdapter<OrderEntity> {
+//   @override
+//   final int typeId = 1;
 
-  @override
-  OrderEntity read(BinaryReader reader) {
-    final numOfFields = reader.readByte();
-    final fields = <int, dynamic>{
-      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
-    };
-    return OrderEntity(
-      bookId: fields[0] as String,
-      image: fields[1] as String,
-      title: fields[2] as String,
-      authorName: fields[3] as String,
-      price: fields[4] as double,
-      quantity: fields[5] as int,
-    );
-  }
+//   @override
+//   OrderEntity read(BinaryReader reader) {
+//     final numOfFields = reader.readByte();
+//     final fields = <int, dynamic>{
+//       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+//     };
+//     return OrderEntity(
+//       bookId: fields[0] as String,
+//       image: fields[1] as String,
+//       title: fields[2] as String,
+//       authorName: fields[3] as String,
+//       price: fields[4] as double,
+//       quantity: fields[5] as int,
+//     );
+//   }
 
-  @override
-  void write(BinaryWriter writer, OrderEntity obj) {
-    writer.writeString(obj.bookId);
-    writer.writeString(obj.image);
-    writer.writeString(obj.title);
-    writer.writeString(obj.authorName);
-    writer.writeDouble(obj.price);
-    writer.writeInt(obj.quantity);
-  }
+//   @override
+//   void write(BinaryWriter writer, OrderEntity obj) {
+//     writer.writeString(obj.bookId);
+//     writer.writeString(obj.image);
+//     writer.writeString(obj.title);
+//     writer.writeString(obj.authorName);
+//     writer.writeDouble(obj.price);
+//     writer.writeInt(obj.quantity);
+//   }
 
-  @override
-  int get hashCode => typeId.hashCode;
+//   @override
+//   int get hashCode => typeId.hashCode;
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is OrderEntityAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
-}
+//   @override
+//   bool operator ==(Object other) =>
+//       identical(this, other) ||
+//       other is OrderEntityAdapter &&
+//           runtimeType == other.runtimeType &&
+//           typeId == other.typeId;
+// }
 
 
 // i tried to listen to some  cubit state and then call scaffoldMessanger.of(context).showSnackBar() to show a snack bar but ti get this error:

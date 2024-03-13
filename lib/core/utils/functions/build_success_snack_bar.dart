@@ -9,13 +9,18 @@ SnackBar buildSuccessSnackBar(String message) {
           color: Colors.white,
         ),
         const SizedBox(width: 8),
-        Text(
-          message,
-          style: const TextStyle(color: Colors.white),
+        Expanded(
+          child: Text(
+            message,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            softWrap: true,
+            style: const TextStyle(color: Colors.white),
+          ),
         ),
       ],
     ),
-    backgroundColor: Colors.greenAccent, // Customize the background color
+    backgroundColor: Colors.green, // Customize the background color
     behavior: SnackBarBehavior.floating, // Make it float above other widgets
     duration: const Duration(seconds: 3), // Show for 3 seconds
   );

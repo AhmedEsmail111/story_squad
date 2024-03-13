@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:story_squad/core/utils/router.dart';
 import 'package:story_squad/features/home/presentation/manager/featured_books/featured_books_cubit.dart';
 
 import '/core/utils/spaces.dart';
@@ -57,8 +59,16 @@ class _FeaturedBooksListViewState extends State<FeaturedBooksListView> {
         padding: const EdgeInsets.symmetric(horizontal: AppSpaces.kSpace16),
         scrollDirection: Axis.horizontal,
         itemCount: widget.books.length,
-        itemBuilder: (context, index) => CustomBookImage(
-          image: widget.books[index].image,
+        itemBuilder: (context, index) => GestureDetector(
+          onTap: () {
+            GoRouter.of(context).push(
+              AppRouter.kBookDetailsView,
+              extra: widget.books[index],
+            );
+          },
+          child: CustomBookImage(
+            image: widget.books[index].image,
+          ),
         ),
         separatorBuilder: (_, i) => const SizedBox(width: 12),
       ),

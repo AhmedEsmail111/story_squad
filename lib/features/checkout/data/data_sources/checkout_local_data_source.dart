@@ -39,6 +39,7 @@ class CheckoutLocalDataSourceImpl extends CheckoutLocalDataSource {
   @override
   List<OrderEntity> getCart() {
     final box = Hive.box<OrderEntity>(AppConstants.kCartBox);
+
     return box.values.toList();
   }
 
@@ -50,7 +51,7 @@ class CheckoutLocalDataSourceImpl extends CheckoutLocalDataSource {
 
   @override
   Future<void> removeFromCart({required OrderEntity orderEntity}) async {
-    final box = Hive.box<OrderEntity>(AppConstants.kCartBox);
+    // final box = Hive.box<OrderEntity>(AppConstants.kCartBox);
     await orderEntity.delete();
   }
 }

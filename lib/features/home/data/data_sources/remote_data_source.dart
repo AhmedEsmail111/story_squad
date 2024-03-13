@@ -10,6 +10,8 @@ abstract class RemoteHomeDataSource {
 
   Future<List<BookEntity>> fetchNewestBooks({int pageNumber = 0});
   Future<List<BookEntity>> fetchSimilarBooks({required String similarity});
+  Future<List<BookEntity>> fetchCategoryBooks(
+      {int pageNumber = 0, required String category});
 }
 
 class RemoteHomeDataSourceImpl extends RemoteHomeDataSource {
@@ -46,8 +48,20 @@ class RemoteHomeDataSourceImpl extends RemoteHomeDataSource {
   Future<List<BookEntity>> fetchSimilarBooks(
       {required String similarity}) async {
     final data = await _apiService.get(
-        endPoint:
-            '${EndPoints.kSimilarBooks}$similarity+intitle&maxResults=20');
+        endPoint: '${EndPoints.kSimilarBooks}$similarity+intitle');
+
+    List<BookEntity> books = parseJsonToData(data);
+
+    return books;
+  }
+
+  @override
+  Future<List<BookEntity>> fetchCategoryBooks(
+      {int pageNumber = 0, required String category}) async {
+    final data = await _apiService.get(
+      endPoint: EndPoints.kCategoryEndPoint(
+          category: category, pageNumber: pageNumber),
+    );
 
     List<BookEntity> books = parseJsonToData(data);
 

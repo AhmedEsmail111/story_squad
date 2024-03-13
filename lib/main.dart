@@ -1,37 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:story_squad/core/utils/functions/get_it__locater.dart';
-import 'package:story_squad/core/utils/simple_bloc_observer.dart';
-import 'package:story_squad/features/checkout/data/use_cases/add_to_cart_case.dart';
-import 'package:story_squad/features/checkout/data/use_cases/change_quantity_case.dart';
-import 'package:story_squad/features/checkout/data/use_cases/get_cart_case.dart';
-import 'package:story_squad/features/checkout/data/use_cases/remove_cart_case.dart';
-import 'package:story_squad/features/checkout/data/use_cases/remove_from_cart_case.dart';
-import 'package:story_squad/features/checkout/domain/entities/order_entity.dart';
-import 'package:story_squad/features/checkout/presentation/manager/checkout/checkout_cubit.dart';
-import 'package:story_squad/features/home/data/repos/home_repo_impl.dart';
-import 'package:story_squad/features/home/domain/entities/book_entity.dart';
-import 'package:story_squad/features/home/domain/use_cases/fetch_featured_books_case.dart';
-import 'package:story_squad/features/home/domain/use_cases/fetch_newest_books_case.dart';
-import 'package:story_squad/features/home/presentation/manager/featured_books/featured_books_cubit.dart';
-import 'package:story_squad/features/home/presentation/manager/newest_books/newest_books_cubit.dart';
+import 'package:story_squad/core/utils/api_keys.dart';
+import 'package:story_squad/features/checkout/data/repos/checkout_repo_impl.dart';
 
 import '/core/utils/constants.dart';
 import '/core/utils/router.dart';
+import 'core/utils/functions/get_it__locater.dart';
+import 'core/utils/simple_bloc_observer.dart';
+import 'features/checkout/data/use_cases/add_to_cart_case.dart';
+import 'features/checkout/data/use_cases/change_quantity_case.dart';
+import 'features/checkout/data/use_cases/get_cart_case.dart';
+import 'features/checkout/data/use_cases/make_stripe_payment_case.dart';
+import 'features/checkout/data/use_cases/remove_cart_case.dart';
+import 'features/checkout/data/use_cases/remove_from_cart_case.dart';
+import 'features/checkout/domain/entities/order_entity.dart';
+import 'features/checkout/presentation/manager/checkout/checkout_cubit.dart';
+import 'features/home/domain/entities/book_entity.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  registerSingletonObjects();
-  await Hive.initFlutter();
-  Hive.registerAdapter(BookEntityAdapter());
-  Hive.registerAdapter(OrderEntityAdapter());
-  await Hive.openBox<BookEntity>(AppConstants.kFeaturedBox);
-  await Hive.openBox<BookEntity>(AppConstants.kNewestBox);
-  await Hive.openBox<OrderEntity>(AppConstants.kCartBox);
+  await initMain();
 
-  Bloc.observer = const SimpleBlocObserver();
   runApp(const StorySquad());
 }
 
@@ -40,32 +32,16 @@ class StorySquad extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => FeaturedBooksCubit(
-            fetchFeaturedBooksCase: FetchFeaturedBooksCase(
-              homeRepo: locater.get<HomeRepoImpl>(),
-            ),
-          )..fetchFeaturedBooks(),
-        ),
-        BlocProvider(
-          create: (context) => NewestBooksCubit(
-            fetchNewestBooksCase: FetchNewestBooksCase(
-              homeRepo: locater.get<HomeRepoImpl>(),
-            ),
-          )..fetchNewestBooks(),
-        ),
-        BlocProvider(
-          create: (context) => CheckoutCubit(
-            addToCartCase: locater.get<AddToCartCase>(),
-            removeFromCartCase: locater.get<RemoveFromCartCase>(),
-            getCartCase: locater.get<GetCartCase>(),
-            removeCartCase: locater.get<RemoveCartCase>(),
-            changeQuantityCase: locater.get<ChangeQuantityCase>(),
-          ),
-        ),
-      ],
+    return BlocProvider(
+      create: (context) => CheckoutCubit(
+        checkoutRepo: locater.get<CheckoutRepoImpl>(),
+        addToCartCase: locater.get<AddToCartCase>(),
+        removeFromCartCase: locater.get<RemoveFromCartCase>(),
+        getCartCase: locater.get<GetCartCase>(),
+        removeCartCase: locater.get<RemoveCartCase>(),
+        changeQuantityCase: locater.get<ChangeQuantityCase>(),
+        makeStripePaymentCase: locater.get<MakeStripePaymentCase>(),
+      )..getCart(),
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         routerConfig: AppRouter.router,
@@ -77,4 +53,16 @@ class StorySquad extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<void> initMain() async {
+  registerSingletonObjects();
+  await Hive.initFlutter();
+  Hive.registerAdapter(BookEntityAdapter());
+  Hive.registerAdapter(OrderEntityAdapter());
+  await Hive.openBox<BookEntity>(AppConstants.kFeaturedBox);
+  await Hive.openBox<BookEntity>(AppConstants.kNewestBox);
+  await Hive.openBox<OrderEntity>(AppConstants.kCartBox);
+  Stripe.publishableKey = ApiKeys.publishableKey;
+  Bloc.observer = const SimpleBlocObserver();
 }

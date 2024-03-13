@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:story_squad/features/home/domain/entities/book_entity.dart';
-import 'package:story_squad/features/home/presentation/views/widgets/custom_fading_recently_added_list.dart';
+import 'package:story_squad/features/home/presentation/views/widgets/custom_fading_book_tile_items_list.dart';
 import 'package:story_squad/features/search/presentation/manager/search_cubit/search_cubit.dart';
 import 'package:story_squad/features/search/presentation/views/widgets/search_results_list_view.dart';
 
@@ -40,7 +40,7 @@ class _SearchResultsListViewBlocConsumerState
             ),
           );
         } else if (state is SearchLoading) {
-          return const CustomFadingRecentlyAddedList();
+          return const CustomFadingBookTileItemsList();
         } else {
           return Container();
         }

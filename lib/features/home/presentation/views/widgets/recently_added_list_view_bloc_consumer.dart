@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:story_squad/core/utils/functions/build_error_snack_bar.dart';
 import 'package:story_squad/features/home/domain/entities/book_entity.dart';
 import 'package:story_squad/features/home/presentation/manager/newest_books/newest_books_cubit.dart';
-import 'package:story_squad/features/home/presentation/views/widgets/custom_fading_recently_added_list.dart';
+import 'package:story_squad/features/home/presentation/views/widgets/custom_fading_book_tile_items_list.dart';
 import 'package:story_squad/features/home/presentation/views/widgets/recently_added_list_view.dart';
 
 class RecentlyAddedListViewBlocConsumer extends StatefulWidget {
@@ -42,7 +42,7 @@ class _RecentlyAddedListViewBlocConsumerState
             child: Text(state.errorMessage),
           );
         } else {
-          return const CustomFadingRecentlyAddedList();
+          return const CustomFadingBookTileItemsList();
         }
       },
     );

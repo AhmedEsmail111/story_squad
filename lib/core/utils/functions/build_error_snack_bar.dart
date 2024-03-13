@@ -9,13 +9,19 @@ SnackBar buildErrorSnackBar(String errorMessage) {
           color: Colors.white,
         ),
         const SizedBox(width: 8),
-        Text(
-          errorMessage,
-          style: const TextStyle(color: Colors.white),
+        Expanded(
+          child: Text(
+            errorMessage,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            softWrap: true,
+            style: const TextStyle(color: Colors.white),
+          ),
         ),
       ],
     ),
-    backgroundColor: Colors.red, // Customize the background color
+    backgroundColor: const Color.fromARGB(
+        255, 238, 81, 70), // Customize the background color
     behavior: SnackBarBehavior.floating, // Make it float above other widgets
     duration: const Duration(seconds: 3), // Show for 3 seconds
   );

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:story_squad/core/utils/functions/build_success_snack_bar.dart';
 import 'package:story_squad/core/utils/functions/get_it__locater.dart';
 import 'package:story_squad/core/utils/spaces.dart';
 import 'package:story_squad/features/checkout/domain/entities/order_entity.dart';
@@ -29,28 +28,30 @@ class BookDetailsViewBody extends StatelessWidget {
         SliverFillRemaining(
           child: Column(
             children: [
-              BlocConsumer<CheckoutCubit, CheckoutStates>(
-                listener: (context, state) {
-                  if (state is AddToCartSuccess) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      buildSuccessSnackBar('Added successfully'),
-                    );
-                  }
-                },
+              BlocBuilder<CheckoutCubit, CheckoutStates>(
                 builder: (context, state) {
+                  final cubit = context.read<CheckoutCubit>();
+                  final orderEntity = OrderEntity(
+                    bookId: bookEntity.bookId,
+                    image: bookEntity.image,
+                    title: bookEntity.title,
+                    authorName: bookEntity.authorName,
+                    price: bookEntity.price,
+                    quantity: 1,
+                  );
                   return CustomBookDetailsAppBar(
-                    onPressed: () {
-                      final orderEntity = OrderEntity(
-                        bookId: bookEntity.bookId,
-                        image: bookEntity.image,
-                        title: bookEntity.title,
-                        authorName: bookEntity.authorName,
-                        price: bookEntity.price,
-                        quantity: 1,
-                      );
-                      BlocProvider.of<CheckoutCubit>(context)
-                          .addToCart(orderEntity: orderEntity);
-                    },
+                    id: bookEntity.bookId,
+                    onPressed: cubit.isInCart(bookEntity.bookId)
+                        ? () {
+                            cubit.changeQuantity(
+                              quantity:
+                                  (cubit.inCartItems[bookEntity.bookId]! + 1),
+                              orderId: orderEntity.bookId,
+                            );
+                          }
+                        : () {
+                            cubit.addToCart(orderEntity: orderEntity);
+                          },
                   );
                 },
               ),

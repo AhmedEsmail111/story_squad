@@ -5,6 +5,7 @@ abstract class AppSpaces {
   static const kSpace24 = 24.0;
   static const kSpace20 = 20.0;
   static const kSpace16 = 16.0;
+  static const kSpace12 = 12.0;
   static const kSpace8 = 8.0;
   static const kSpace6 = 6.0;
   static const kSpace5 = 5.0;

@@ -10,6 +10,7 @@ class CustomButton extends StatelessWidget {
   final double? textSize;
   final void Function()? onPressed;
   final BorderRadiusGeometry? borderRadius;
+  final double height;
 
   const CustomButton({
     super.key,
@@ -19,12 +20,13 @@ class CustomButton extends StatelessWidget {
     this.textSize,
     required this.onPressed,
     this.borderRadius,
+    required this.height,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 48,
+      height: height,
       child: TextButton(
         style: TextButton.styleFrom(
           backgroundColor: backgroundColor,

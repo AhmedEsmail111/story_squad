@@ -8,13 +8,19 @@ class CategoriesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final categories = <String>['Programming', 'Marketing', 'Finance', 'Sport'];
+    final categories = <String>[
+      'Programming',
+      'Marketing',
+      'Finance',
+      'Medicine',
+      'Sport',
+    ];
     return SizedBox(
       height: MediaQuery.sizeOf(context).height * 0.07,
       child: ListView.separated(
         padding: const EdgeInsets.symmetric(horizontal: AppSpaces.kSpace24),
         scrollDirection: Axis.horizontal,
-        itemCount: 4,
+        itemCount: categories.length,
         itemBuilder: (context, index) =>
             CategoryItem(category: categories[index]),
         separatorBuilder: (_, i) => const SizedBox(width: 12),

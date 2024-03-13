@@ -10,5 +10,8 @@ abstract class HomeRepo {
   Future<Either<Failure, List<BookEntity>>> fetchSimilarBooks(
       {required String similarity});
 
+  Future<Either<Failure, List<BookEntity>>> fetchCategoryBooks(
+      {int pageNumber = 0, required String category});
+
   Future<Either<Failure, void>> launchPreview({required String url});
 }

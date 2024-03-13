@@ -4,8 +4,8 @@ import 'package:story_squad/features/home/presentation/views/widgets/custom_fadi
 
 import '../../../../../core/utils/spaces.dart';
 
-class CustomFadingRecentlyAddedList extends StatelessWidget {
-  const CustomFadingRecentlyAddedList({super.key});
+class CustomFadingBookTileItemsList extends StatelessWidget {
+  const CustomFadingBookTileItemsList({super.key});
 
   @override
   Widget build(BuildContext context) {
