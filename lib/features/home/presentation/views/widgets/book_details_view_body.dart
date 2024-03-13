@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:story_squad/core/utils/functions/build_success_snack_bar.dart';
 import 'package:story_squad/core/utils/functions/get_it__locater.dart';
 import 'package:story_squad/core/utils/spaces.dart';
+import 'package:story_squad/features/checkout/domain/entities/order_entity.dart';
+import 'package:story_squad/features/checkout/presentation/manager/checkout/checkout_cubit.dart';
 import 'package:story_squad/features/home/data/repos/home_repo_impl.dart';
 import 'package:story_squad/features/home/presentation/manager/preview_price_cubit/preview_price_cubit.dart';
 import 'package:story_squad/features/home/presentation/views/widgets/action_buttons_row.dart';
@@ -26,7 +29,31 @@ class BookDetailsViewBody extends StatelessWidget {
         SliverFillRemaining(
           child: Column(
             children: [
-              const CustomBookDetailsAppBar(),
+              BlocConsumer<CheckoutCubit, CheckoutStates>(
+                listener: (context, state) {
+                  if (state is AddToCartSuccess) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      buildSuccessSnackBar('Added successfully'),
+                    );
+                  }
+                },
+                builder: (context, state) {
+                  return CustomBookDetailsAppBar(
+                    onPressed: () {
+                      final orderEntity = OrderEntity(
+                        bookId: bookEntity.bookId,
+                        image: bookEntity.image,
+                        title: bookEntity.title,
+                        authorName: bookEntity.authorName,
+                        price: bookEntity.price,
+                        quantity: 1,
+                      );
+                      BlocProvider.of<CheckoutCubit>(context)
+                          .addToCart(orderEntity: orderEntity);
+                    },
+                  );
+                },
+              ),
               const SizedBox(
                 height: AppSpaces.kSpace20,
               ),

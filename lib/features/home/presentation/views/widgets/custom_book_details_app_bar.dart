@@ -4,7 +4,8 @@ import 'package:go_router/go_router.dart';
 import '../../../../../core/utils/spaces.dart';
 
 class CustomBookDetailsAppBar extends StatelessWidget {
-  const CustomBookDetailsAppBar({super.key});
+  const CustomBookDetailsAppBar({super.key, required this.onPressed});
+  final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class CustomBookDetailsAppBar extends StatelessWidget {
             icon: const Icon(Icons.close),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: onPressed,
             icon: const Icon(Icons.shopping_cart_outlined),
           ),
         ],

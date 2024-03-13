@@ -8,4 +8,5 @@ abstract class AppConstants {
   static const kGtSectraFine = 'GT Sectra Fine';
   static const kFeaturedBox = 'featured_box';
   static const kNewestBox = 'newest_box';
+  static const kCartBox = 'cart_box';
 }

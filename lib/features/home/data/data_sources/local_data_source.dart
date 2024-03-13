@@ -30,6 +30,7 @@ class LocalHomeDataSourceImpl extends LocalHomeDataSource {
     final endIndex = (pageNumber + 1) * 10;
     var box = Hive.box<BookEntity>(AppConstants.kFeaturedBox);
     final boxLength = box.values.length;
+
     if (startIndex >= boxLength || endIndex > boxLength) {
       return [];
     }
