@@ -1,4 +1,5 @@
 abstract class ApiKeys {
+  static const googleBooksApiKey = 'AIzaSyD3d52mb7_5uRc0aL8hX1s05j52tqnRbnA';
   static const secretKey =
       'sk_test_51Of3HDHCWHH58wO46cg77Z6cT62e5iVj8LasgcWLBNSVu1l50Gty9xd2UJXtVBwME5Vhbs4nbndOqeTyVndJ69uW00tLb9VTCZ';
   static const publishableKey =

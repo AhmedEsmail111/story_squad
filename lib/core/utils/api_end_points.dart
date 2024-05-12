@@ -1,5 +1,5 @@
 abstract class EndPoints {
-  static const baseUrl = 'https://www.googleapis.combooks/v1';
+  static const baseUrl = 'https://www.googleapis.com/books/v1';
   static const kFeaturedBooks = '$baseUrl/volumes?Filtering=full&q=around the';
   static const kNewestBooks =
       '$baseUrl/volumes?Filtering=full&q=all of the&orderBy=newest';

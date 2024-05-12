@@ -24,7 +24,9 @@ class RemoteHomeDataSourceImpl extends RemoteHomeDataSource {
     final data = await _apiService.get(
       endPoint: '${EndPoints.kNewestBooks}&startIndex=${(pageNumber * 10)}',
     );
+
     List<BookEntity> books = parseJsonToData(data);
+    print('request is done properly and data is $books');
     saveDataToHive(books: books, boxName: AppConstants.kNewestBox);
 
     return books;
@@ -41,6 +43,7 @@ class RemoteHomeDataSourceImpl extends RemoteHomeDataSource {
       boxName: AppConstants.kFeaturedBox,
     );
 
+    print('the result is $books');
     return books;
   }
 
